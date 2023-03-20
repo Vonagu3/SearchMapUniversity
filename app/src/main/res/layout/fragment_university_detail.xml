@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".presentation.map.MapDetailFragment">
+
+    <ImageView
+        android:id="@+id/imgvLikeUni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/baseline_thumb_up_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgvUniLogo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mgu" />
+
+    <TextView
+        android:id="@+id/tvUniName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/uni_name"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgvUniLogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgvUniLogo"
+        app:layout_constraintTop_toTopOf="@+id/imgvUniLogo" />
+
+    <TextView
+        android:id="@+id/tvUniSite"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="100dp"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="@string/uni_site"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tvUniName"
+        app:layout_constraintStart_toStartOf="@+id/imgvUniLogo"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
+
+    <ImageView
+        android:id="@+id/imgvPhone"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgvMail"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUniSite"
+        app:srcCompat="@drawable/baseline_phone" />
+
+    <ImageView
+        android:id="@+id/imgvMail"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgvPhone"
+        app:layout_constraintEnd_toStartOf="@+id/imgvLocation"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imgvPhone"
+        app:layout_constraintTop_toTopOf="@+id/imgvPhone"
+        app:srcCompat="@drawable/baseline_mail" />
+
+    <ImageView
+        android:id="@+id/imgvLocation"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toStartOf="@+id/imgvTelegram"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imgvMail"
+        app:layout_constraintTop_toTopOf="@+id/imgvMail"
+        app:srcCompat="@drawable/baseline_location_on" />
+
+    <ImageView
+        android:id="@+id/imgvTelegram"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toStartOf="@+id/imgvVk"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imgvLocation"
+        app:layout_constraintTop_toTopOf="@+id/imgvLocation"
+        app:srcCompat="@drawable/telegram" />
+
+    <ImageView
+        android:id="@+id/imgvVk"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imgvTelegram"
+        app:layout_constraintTop_toTopOf="@+id/imgvTelegram"
+        app:srcCompat="@drawable/vk" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="imgvUniLogo, tvUniName"
+        tools:layout_editor_absoluteY="120dp" />
+
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:maxLines="3"
+        android:text="просп. Вернадского, 78, стр. 4"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvUniName"
+        app:layout_constraintStart_toStartOf="@+id/imgvUniLogo"
+        app:layout_constraintTop_toBottomOf="@+id/barrier" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

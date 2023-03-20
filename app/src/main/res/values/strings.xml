@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SearchMapUniversity</string>
+    <string name="uni_name">Национальный исследовательский технологический университет МИСиС</string>
+    <string name="uni_site">https://misis.ru/</string>
+</resources>
