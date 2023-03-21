@@ -15,23 +15,14 @@ import com.example.searchmapuniversity.databinding.UniversityRvItemBinding
  */
 abstract class BaseViewHolder<in Model: Any, in Payload: Any>(
     view: View
-): RecyclerView.ViewHolder(view), ViewBindingContainer {
+): RecyclerView.ViewHolder(view) {
 
     abstract fun bind(model: Model)
 
     abstract fun bind(model: Model, payload: Payload)
 
-    override val bindingView: View = itemView
-
     open fun update(model: Model, payload: Payload?) {
         payload ?: return bind(model)
         bind(model, payload)
     }
-}
-
-/**
- * Для использования [ViewBinding]
- */
-interface ViewBindingContainer{
-    val bindingView: View
 }

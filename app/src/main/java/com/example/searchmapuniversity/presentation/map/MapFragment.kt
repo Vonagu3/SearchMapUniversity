@@ -17,8 +17,6 @@ import com.example.searchmapuniversity.models.domain.yandex.UniversityInfoItem
 import com.example.searchmapuniversity.presentation.map.MapDetailFragment.Companion.UNI_REQUEST_CODE
 import com.example.searchmapuniversity.presentation.map.MapDetailFragment.Companion.UNI_SELECTED
 import com.example.searchmapuniversity.presentation.map.adapter.UniversityListAdapter
-import com.example.searchmapuniversity.presentation.map.adapter.UniversityListAdapter2
-import com.example.searchmapuniversity.utils.ActionListener
 import com.example.searchmapuniversity.utils.Result
 import com.example.searchmapuniversity.utils.UIEvent
 import com.google.android.material.snackbar.Snackbar
@@ -35,13 +33,9 @@ class MapFragment: Fragment(R.layout.fragment_map) {
 
     private lateinit var binding: FragmentMapBinding
     private val viewModel: MapViewModel by viewModels()
-//    private val adapter by lazy { UniversityListAdapter(object : ActionListener<UniversityInfoItem> {
-//        override fun onItemClicked(item: UniversityInfoItem, view: View?) {
-//            findNavController().navigate(MapFragmentDirections.actionMapFragmentToMapDetailFragment(item))
-//        }
-//    }) }
+
     private val adapter by lazy {
-        UniversityListAdapter2{
+        UniversityListAdapter{
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToMapDetailFragment(it))
         }
     }
