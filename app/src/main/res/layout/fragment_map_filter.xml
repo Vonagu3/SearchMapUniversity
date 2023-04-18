@@ -172,7 +172,7 @@
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textInputLayoutStations"
-        app:layout_constraintTop_toBottomOf="@+id/silderMetroDistance" />
+        app:layout_constraintTop_toBottomOf="@+id/sliderMetroDistance" />
 
     <TextView
         android:id="@+id/textView9"
@@ -217,16 +217,17 @@
         app:layout_constraintTop_toTopOf="@+id/textView8" />
 
     <com.google.android.material.slider.Slider
-        android:id="@+id/silderMetroDistance"
+        android:id="@+id/sliderMetroDistance"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:stepSize="100"
-        android:value="300"
+        android:enabled="false"
+        android:stepSize="200"
+        android:value="400"
         android:valueFrom="0"
-        android:valueTo="1000"
+        android:valueTo="5000"
         app:labelBehavior="floating"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -291,22 +292,21 @@
         android:id="@+id/cbFulltime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="45dp"
+        android:layout_marginTop="20dp"
         android:text="Дневная"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cbEvening"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <CheckBox
         android:id="@+id/cbEvening"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
         android:text="Вечерняя"
         app:layout_constraintBottom_toBottomOf="@+id/cbFulltime"
+        app:layout_constraintEnd_toStartOf="@+id/cbPartTime"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/cbFulltime"
         app:layout_constraintTop_toTopOf="@+id/cbFulltime" />
 
@@ -322,5 +322,46 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutStations" />
+
+    <Button
+        android:id="@+id/btnApplyFilters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@null"
+        android:backgroundTint="@color/blue_dark"
+        android:text="Применить"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnResetFilters"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbFulltime" />
+
+    <Button
+        android:id="@+id/btnResetFilters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:text="Сбросить"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/btnApplyFilters"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnApplyFilters"
+        app:layout_constraintTop_toTopOf="@+id/btnApplyFilters" />
+
+    <CheckBox
+        android:id="@+id/cbPartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Заочная"
+        app:layout_constraintBottom_toBottomOf="@+id/cbEvening"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/cbEvening"
+        app:layout_constraintTop_toTopOf="@+id/cbEvening" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,9 +3,11 @@ package com.example.searchmapuniversity.presentation.map
 import android.animation.ObjectAnimator
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Location
 import android.os.Bundle
 import android.util.Property
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,9 +16,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.searchmapuniversity.R
 import com.example.searchmapuniversity.databinding.FragmentMapBinding
+import com.example.searchmapuniversity.models.domain.metro.FilterInfo
 import com.example.searchmapuniversity.models.domain.yandex.UniversityInfoItem
 import com.example.searchmapuniversity.presentation.map.MapDetailFragment.Companion.UNI_REQUEST_CODE
 import com.example.searchmapuniversity.presentation.map.MapDetailFragment.Companion.UNI_SELECTED
+import com.example.searchmapuniversity.presentation.map.MapFilterFragment.Companion.FILTER_INFO
+import com.example.searchmapuniversity.presentation.map.MapFilterFragment.Companion.REQUEST_CODE
 import com.example.searchmapuniversity.presentation.map.adapter.UniversityListAdapter
 import com.example.searchmapuniversity.utils.Result
 import com.example.searchmapuniversity.utils.UIEvent
@@ -34,6 +39,8 @@ class MapFragment: Fragment(R.layout.fragment_map) {
 
     private lateinit var binding: FragmentMapBinding
     private val viewModel: MapViewModel by viewModels()
+    private lateinit var universityInfoItemList: List<UniversityInfoItem>
+    private var filterInfo: FilterInfo? = null
 
     private val adapter by lazy {
         UniversityListAdapter{
@@ -56,6 +63,7 @@ class MapFragment: Fragment(R.layout.fragment_map) {
 
             viewModel.fetchUniversities(fetchFromRemote = false)
             observeUniversitiesData()
+            observeFilters()
             observeError()
 
             btnUniversityRvShrink.setOnClickListener {
@@ -68,12 +76,37 @@ class MapFragment: Fragment(R.layout.fragment_map) {
             }
 
             btnFilterUniversities.setOnClickListener {
-                findNavController().navigate(MapFragmentDirections.actionMapFragmentToMapFilterFragment())
+                findNavController().navigate(MapFragmentDirections.actionMapFragmentToMapFilterFragment(filterInfo))
             }
         }
         parentFragmentManager.setFragmentResultListener(UNI_REQUEST_CODE, viewLifecycleOwner){ _, data ->
             val selected = data.get(UNI_SELECTED) as UniversityInfoItem
             zoomToUniversity(selected)
+        }
+    }
+
+    private fun observeFilters(){
+        parentFragmentManager.setFragmentResultListener(REQUEST_CODE, viewLifecycleOwner){ _, data ->
+            filterInfo = data.get(FILTER_INFO) as? FilterInfo
+            filterInfo?.metroFilter?.let { metroInfo ->
+                if (metroInfo.lat != null && metroInfo.lng != null && metroInfo.metroRadius != null){
+                    val metroStationLocation = Location("metroStation")
+                    metroStationLocation.latitude = metroInfo.lat!!
+                    metroStationLocation.longitude = metroInfo.lng!!
+
+                    universityInfoItemList.filter {
+                        val universityLocation = Location("university")
+                        universityLocation.latitude = it.lat
+                        universityLocation.longitude = it.lon
+
+                        metroStationLocation.distanceTo(universityLocation) < metroInfo.metroRadius!!
+                    }.let {
+                        adapter.submitList(it)
+                        initUniversitiesCoordinates(it)
+                    }
+                }
+            } ?: viewModel.fetchUniversities(fetchFromRemote = false)
+
         }
     }
 
@@ -85,8 +118,11 @@ class MapFragment: Fragment(R.layout.fragment_map) {
                 }
                 is Result.Success -> {
                     binding.progressBarUniversityLoading.visibility = View.INVISIBLE
-                    adapter.submitList(it.data)
-                    it.data?.let { it1 -> initUniversitiesCoordinates(it1) }
+                    it.data?.let { it1 ->
+                        universityInfoItemList = it1
+                        adapter.submitList(it1)
+                        initUniversitiesCoordinates(it1)
+                    }
                 }
                 else -> null
             }
@@ -94,15 +130,18 @@ class MapFragment: Fragment(R.layout.fragment_map) {
     }
 
     private fun initUniversitiesCoordinates(info: List<UniversityInfoItem>){
-        binding.mapView.map.move(CameraPosition(Point(MOSCOW_LAT, MOSCOW_LON), 10.0f, 0.0f, 0.0f))
-        val marker = ImageProvider.fromBitmap(getBitmapFromVectorDrawable(R.drawable.baseline_university))
-        for (item in info){
-            binding.mapView.map.mapObjects.addPlacemark(Point(item.lat, item.lon), marker)
+        binding.apply {
+            mapView.map.mapObjects.clear()
+            mapView.map.move(CameraPosition(Point(MOSCOW_LAT, MOSCOW_LON), 10.0f, 0.0f, 0.0f))
+            val marker = ImageProvider.fromBitmap(getBitmapFromVectorDrawable(R.drawable.baseline_university))
+            for (item in info){
+                mapView.map.mapObjects.addPlacemark(Point(item.lat, item.lon), marker)
+            }
         }
     }
 
     private fun zoomToUniversity(item: UniversityInfoItem){
-        binding.mapView.map.move(CameraPosition(Point(item.lat, item.lon), 17.5f, 0.0f, 0.0f),
+        binding.mapView.map.move(CameraPosition(Point(item.lat, item.lon), 13.5f, 0.0f, 0.0f),
         Animation(Animation.Type.SMOOTH, 0f), null)
     }
 

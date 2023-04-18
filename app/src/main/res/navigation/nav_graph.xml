@@ -35,5 +35,10 @@
         android:id="@+id/mapFilterFragment"
         android:name="com.example.searchmapuniversity.presentation.map.MapFilterFragment"
         android:label="fragment_map_filter"
-        tools:layout="@layout/fragment_map_filter" />
+        tools:layout="@layout/fragment_map_filter" >
+        <argument
+            android:name="filterInfo"
+            app:argType="com.example.searchmapuniversity.models.domain.metro.FilterInfo"
+            app:nullable="true" />
+    </dialog>
 </navigation>
