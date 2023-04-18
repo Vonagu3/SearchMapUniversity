@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.searchmapuniversity.R
 import com.example.searchmapuniversity.databinding.FragmentMapBinding
 import com.example.searchmapuniversity.models.domain.yandex.UniversityInfoItem
@@ -48,6 +49,10 @@ class MapFragment: Fragment(R.layout.fragment_map) {
 
         binding.apply {
             rvContacts.adapter = adapter
+            val itemAnimator = rvContacts.itemAnimator
+            if (itemAnimator is DefaultItemAnimator){
+                itemAnimator.supportsChangeAnimations = false
+            }
 
             viewModel.fetchUniversities(fetchFromRemote = false)
             observeUniversitiesData()

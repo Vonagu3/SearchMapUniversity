@@ -8,6 +8,11 @@ sealed class Result<T>(val data: T? = null, val message: String? = null) {
     class Loading<T>(val isLoading: Boolean = true) : Result<T>(null)
 }
 
+sealed class UniFeedback{
+    object LIKED: UniFeedback()
+    object UNLIKED: UniFeedback()
+}
+
 sealed class UIEvent{
     data class ShowSnackbar(val message: String): UIEvent()
 }

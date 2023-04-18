@@ -8,5 +8,6 @@ abstract class OnPayloadViewHolder<in Model: Any, Payload: Any>(
 
     abstract val defaulPayload: Payload
 
+    // зачем это? без этого нет bind с payload
     override fun bind(model: Model) = bind(model, defaulPayload)
 }

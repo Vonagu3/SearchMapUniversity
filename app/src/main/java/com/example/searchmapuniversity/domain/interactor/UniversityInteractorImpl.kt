@@ -2,6 +2,7 @@ package com.example.searchmapuniversity.domain.interactor
 import com.example.searchmapuniversity.domain.repository.UniversityRepository
 import com.example.searchmapuniversity.models.domain.yandex.UniversityInfoItem
 import com.example.searchmapuniversity.utils.Result
+import com.example.searchmapuniversity.utils.UniFeedback
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -12,7 +13,7 @@ class UniversityInteractorImpl @Inject constructor(
         return universityRepository.getUniversities(fetchFromRemote)
     }
 
-    override fun likeUniversity(universityInfoItem: UniversityInfoItem): Flow<Result<Boolean>> {
+    override fun likeUniversity(universityInfoItem: UniversityInfoItem): Flow<Result<UniFeedback>> {
         return universityRepository.likeUniversity(universityInfoItem)
     }
 

@@ -2,6 +2,7 @@ package com.example.searchmapuniversity.presentation.recyclerview.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.example.searchmapuniversity.models.domain.diff.Payloadable
 import com.example.searchmapuniversity.models.domain.yandex.UniversityInfoItem
 import com.example.searchmapuniversity.presentation.recyclerview.adapter.diff.BaseDiffCallback
 import com.example.searchmapuniversity.presentation.recyclerview.adapter.holder.BaseViewHolder
@@ -15,8 +16,9 @@ import com.example.searchmapuniversity.presentation.recyclerview.adapter.holder.
  *  @constructor
  *  @param diffCallback - реализация [DiffUtil.ItemCallback] с учетом типа [Model]
  */
-abstract class BaseListAdapter<Model: Any, Payload: Any, ViewHolder: BaseViewHolder<Model, Payload>>
-    : ListAdapter<Model, ViewHolder>( object : BaseDiffCallback<Model>(){} ) {
+abstract class BaseListAdapter<Model: Payloadable, Payload: Any, ViewHolder: BaseViewHolder<Model, Payload>>(
+    diffCallback: DiffUtil.ItemCallback<Model> = BaseDiffCallback()
+) : ListAdapter<Model, ViewHolder>(diffCallback) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = getItem(position).let(holder::bind)
 

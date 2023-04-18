@@ -14,6 +14,7 @@ import javax.inject.Inject
 import com.example.searchmapuniversity.utils.Result
 import com.example.searchmapuniversity.utils.UIEvent
 import com.example.searchmapuniversity.utils.UNKNOWN_ERROR
+import com.example.searchmapuniversity.utils.UniFeedback
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
@@ -27,15 +28,15 @@ class MapDetailViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UIEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    private val _universityLiked = MutableLiveData<Result<Boolean>>()
-    val universityLiked: LiveData<Result<Boolean>> = _universityLiked
+    private val _universityLiked = MutableLiveData<UniFeedback>()
+    val universityLiked: LiveData<UniFeedback> = _universityLiked
 
     fun likeUniversity(universityInfoItem: UniversityInfoItem){
         viewModelScope.launch {
             universityInteractor.likeUniversity(universityInfoItem).onEach {
                 when(it){
                     is Result.Success -> {
-                        _universityLiked.postValue(Result.Success(true))
+                        _universityLiked.postValue(it.data)
                     }
                     is Result.Error -> {
                         _eventFlow.emit(UIEvent.ShowSnackbar(it.message ?: UNKNOWN_ERROR))

@@ -2,8 +2,9 @@ package com.example.searchmapuniversity.presentation.recyclerview.adapter.diff
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
+import com.example.searchmapuniversity.models.domain.diff.Payloadable
 
-abstract class BaseDiffCallback<T : Any>: DiffUtil.ItemCallback<T>() {
+class BaseDiffCallback<T : Payloadable>: DiffUtil.ItemCallback<T>() {
 
     @SuppressLint("DiffUtilEquals")
     override fun areContentsTheSame(oldItem: T, newItem: T): Boolean =
@@ -11,5 +12,8 @@ abstract class BaseDiffCallback<T : Any>: DiffUtil.ItemCallback<T>() {
 
     override fun areItemsTheSame(oldItem: T, newItem: T): Boolean =
         oldItem == newItem
+
+    override fun getChangePayload(oldItem: T, newItem: T): Any? =
+        newItem.calculatePayload(oldItem)
 
 }
