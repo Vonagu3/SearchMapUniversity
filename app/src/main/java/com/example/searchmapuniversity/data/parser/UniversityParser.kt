@@ -48,12 +48,13 @@ class UniversityParser @Inject constructor(): XlsxParser<UniversityInfoList> {
                 if (rowInfo.size > 1) {
                     universityInfoList.add(
                         UniversityInfoItem(
-                            name = rowInfo[0],
-                            logo = rowInfo[1],
-                            address = rowInfo[2],
-                            lat = rowInfo[3].split(", ").first().toDouble(),
-                            lon = rowInfo[3].split(", ").last().toDouble(),
-                            site = rowInfo[4],
+                            abbreviation = rowInfo[0],
+                            name = rowInfo[1],
+                            logo = rowInfo[2],
+                            address = rowInfo[3],
+                            lat = rowInfo[4].split(", ").first().toDouble(),
+                            lon = rowInfo[4].split(", ").last().toDouble(),
+                            site = rowInfo[5],
                             like = 0
                         )
                     )

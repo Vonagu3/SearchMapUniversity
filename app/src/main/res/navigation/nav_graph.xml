@@ -21,7 +21,11 @@
         android:id="@+id/accountFragment"
         android:name="com.example.searchmapuniversity.presentation.account.AccountFragment"
         android:label="fragment_account"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_accountFragment_to_favouriteUniversitiesFragment"
+            app:destination="@id/favouriteUniversitiesFragment" />
+    </fragment>
     <dialog
         android:id="@+id/mapDetailFragment"
         android:name="com.example.searchmapuniversity.presentation.map.MapDetailFragment"
@@ -41,4 +45,13 @@
             app:argType="com.example.searchmapuniversity.models.domain.metro.FilterInfo"
             app:nullable="true" />
     </dialog>
+    <fragment
+        android:id="@+id/favouriteUniversitiesFragment"
+        android:name="com.example.searchmapuniversity.presentation.account.FavouriteUniversitiesFragment"
+        android:label="fragment_favourite_universities"
+        tools:layout="@layout/fragment_favourite_universities" >
+        <argument
+            android:name="universityInfoItem"
+            app:argType="com.example.searchmapuniversity.models.domain.yandex.UniversityInfoItem" />
+    </fragment>
 </navigation>

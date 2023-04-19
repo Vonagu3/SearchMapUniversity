@@ -25,7 +25,7 @@ class UniversityListAdapter(
             binding.apply {
 //                if (!payload.likeChanged) {
                     Glide.with(root.context).load(model.logo).circleCrop().into(uniLogo)
-                    uniName.text = Html.fromHtml(model.name, Html.FROM_HTML_MODE_LEGACY)
+                    uniName.text = Html.fromHtml(model.abbreviation, Html.FROM_HTML_MODE_LEGACY)
                     itemView.setOnClickListener { onClick(model) }
 //                }
             }

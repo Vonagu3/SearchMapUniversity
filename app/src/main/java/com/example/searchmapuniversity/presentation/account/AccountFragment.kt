@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.searchmapuniversity.R
 import com.example.searchmapuniversity.databinding.FragmentAccountBinding
 import com.example.searchmapuniversity.presentation.account.adapter.LikedUniversitiesListAdapter
@@ -22,7 +23,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
     private val viewModel: AccountViewModel by viewModels()
     private val adapter by lazy {
         LikedUniversitiesListAdapter {
-            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+            findNavController().navigate(AccountFragmentDirections.actionAccountFragmentToFavouriteUniversitiesFragment(it))
         }
     }
 

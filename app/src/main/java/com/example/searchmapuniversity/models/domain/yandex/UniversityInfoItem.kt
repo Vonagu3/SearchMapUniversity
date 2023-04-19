@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UniversityInfoItem(
+    val abbreviation: String,
     val name: String,
     val logo: String,
     val address: String,

@@ -7,6 +7,7 @@ import javax.inject.Inject
 class UniversityInfoConverter @Inject constructor(): TwoWayConverter<UniversityInfoEntity, UniversityInfoItem> {
     override fun convert(from: UniversityInfoEntity) =
         UniversityInfoItem(
+            abbreviation = from.abbreviation,
             name = from.name,
             logo = from.logo,
             address = from.address,
@@ -18,6 +19,7 @@ class UniversityInfoConverter @Inject constructor(): TwoWayConverter<UniversityI
 
     override fun reverse(to: UniversityInfoItem) =
         UniversityInfoEntity(
+            abbreviation = to.abbreviation,
             name = to.name,
             logo = to.logo,
             address = to.address,

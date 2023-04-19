@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class UniversityInfoEntity(
     @PrimaryKey
+    val abbreviation: String,
     val name: String,
     val logo: String,
     val address: String,
