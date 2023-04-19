@@ -28,11 +28,11 @@ class UniversityRepositoryImpl @Inject constructor(
     private val universityFileItemConverter: OneWayConverter<FileItemDto, UniversityFileItem>,
     private val universityXlsxParser: XlsxParser<UniversityInfoList>
 ) : UniversityRepository {
-    override fun getUniversities(fetchFromRemote: Boolean): Flow<Result<List<UniversityInfoItem>>> =
+    override fun getUniversities(fetchFromRemote: Boolean, query: String?): Flow<Result<List<UniversityInfoItem>>> =
         flow {
             emit(Result.Loading())
             try {
-                val localUniversityInfoList = universityDao.getUniversityList()
+                val localUniversityInfoList = universityDao.getUniversityList(query ?: "")
                 val isDbEmpty = localUniversityInfoList.isEmpty()
                 val loadFromCache = !isDbEmpty && !fetchFromRemote
                 if (loadFromCache) {
@@ -64,7 +64,7 @@ class UniversityRepositoryImpl @Inject constructor(
                 )
                 emit(
                     Result.Success(
-                        data = universityDao.getUniversityList()
+                        data = universityDao.getUniversityList(query ?: "")
                             .map { universityInfoConverter.convert(it) })
                 )
 

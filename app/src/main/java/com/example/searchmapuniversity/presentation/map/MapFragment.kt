@@ -5,6 +5,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.location.Location
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Property
 import android.view.View
 import android.widget.Toast
@@ -61,17 +63,18 @@ class MapFragment: Fragment(R.layout.fragment_map) {
                 itemAnimator.supportsChangeAnimations = false
             }
 
-            viewModel.fetchUniversities(fetchFromRemote = false)
+            viewModel.fetchUniversities(fetchFromRemote = false, null)
             observeUniversitiesData()
             observeFilters()
             observeError()
+            initSearchUniversityListener()
 
             btnUniversityRvShrink.setOnClickListener {
                 startRvAnimation()
             }
 
             swipeRefreshLayoutUniversities.setOnRefreshListener {
-                viewModel.fetchUniversities(fetchFromRemote = true)
+                viewModel.fetchUniversities(fetchFromRemote = true, null)
                 swipeRefreshLayoutUniversities.isRefreshing = false
             }
 
@@ -82,6 +85,21 @@ class MapFragment: Fragment(R.layout.fragment_map) {
         parentFragmentManager.setFragmentResultListener(UNI_REQUEST_CODE, viewLifecycleOwner){ _, data ->
             val selected = data.get(UNI_SELECTED) as UniversityInfoItem
             zoomToUniversity(selected)
+        }
+    }
+
+    private fun initSearchUniversityListener() {
+        binding.apply {
+            etSearchUniversity.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
+
+                override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    viewModel.searchUniversities(s.toString())
+                }
+
+                override fun afterTextChanged(p0: Editable?) = Unit
+
+            })
         }
     }
 
@@ -105,7 +123,7 @@ class MapFragment: Fragment(R.layout.fragment_map) {
                         initUniversitiesCoordinates(it)
                     }
                 }
-            } ?: viewModel.fetchUniversities(fetchFromRemote = false)
+            } ?: viewModel.fetchUniversities(fetchFromRemote = false, null)
 
         }
     }

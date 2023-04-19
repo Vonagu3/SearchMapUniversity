@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="150dp"
-    android:layout_height="wrap_content">
+    android:layout_height="150dp">
 
     <ImageView
         android:id="@+id/uniLogo"
@@ -23,7 +23,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="30dp"
         android:ellipsize="end"
         android:text="Московский государственный университет имени им. Ломоносова"
         android:textAlignment="center"

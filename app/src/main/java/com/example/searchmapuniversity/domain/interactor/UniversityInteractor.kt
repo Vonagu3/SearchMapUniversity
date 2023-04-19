@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface UniversityInteractor {
-    fun fetchUniversitiesInfo(fetchFromRemote: Boolean): Flow<Result<List<UniversityInfoItem>>>
+    fun fetchUniversitiesInfo(fetchFromRemote: Boolean, query: String?): Flow<Result<List<UniversityInfoItem>>>
 //    suspend fun likeUniversity(universityInfoItem: UniversityInfoItem): Result<Boolean>
     fun likeUniversity(universityInfoItem: UniversityInfoItem): Flow<Result<UniFeedback>>
     fun fetchLikedUniversities(): Flow<Result<List<UniversityInfoItem>>>

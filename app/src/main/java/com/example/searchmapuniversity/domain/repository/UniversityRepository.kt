@@ -5,7 +5,7 @@ import com.example.searchmapuniversity.utils.UniFeedback
 import kotlinx.coroutines.flow.Flow
 
 interface UniversityRepository {
-    fun getUniversities(fetchFromRemote: Boolean): Flow<Result<List<UniversityInfoItem>>>
+    fun getUniversities(fetchFromRemote: Boolean, query: String?): Flow<Result<List<UniversityInfoItem>>>
     fun getLikedUniversities(): Flow<Result<List<UniversityInfoItem>>>
     fun likeUniversity(universityInfoItem: UniversityInfoItem): Flow<Result<UniFeedback>>
 }

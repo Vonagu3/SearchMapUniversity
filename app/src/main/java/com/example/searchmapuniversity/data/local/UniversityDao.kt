@@ -16,8 +16,8 @@ interface UniversityDao {
     @Query("DELETE FROM universityInfoEntity")
     suspend fun clearUniversityInfo()
 
-    @Query("SELECT * FROM universityInfoEntity")
-    suspend fun getUniversityList(): List<UniversityInfoEntity>
+    @Query("SELECT * FROM universityInfoEntity WHERE LOWER(abbreviation) LIKE LOWER(:query) || '%' ")
+    suspend fun getUniversityList(query: String): List<UniversityInfoEntity>
 
     @Query("UPDATE universityInfoEntity SET like = :like WHERE name = :name")
     suspend fun likeUniversity(name: String, like: Int)

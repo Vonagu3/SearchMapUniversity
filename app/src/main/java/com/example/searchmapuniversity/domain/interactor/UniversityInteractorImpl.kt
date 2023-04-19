@@ -9,8 +9,8 @@ import javax.inject.Inject
 class UniversityInteractorImpl @Inject constructor(
     private val universityRepository: UniversityRepository
 ): UniversityInteractor {
-    override fun fetchUniversitiesInfo(fetchFromRemote: Boolean): Flow<Result<List<UniversityInfoItem>>> {
-        return universityRepository.getUniversities(fetchFromRemote)
+    override fun fetchUniversitiesInfo(fetchFromRemote: Boolean, query: String?): Flow<Result<List<UniversityInfoItem>>> {
+        return universityRepository.getUniversities(fetchFromRemote, query)
     }
 
     override fun likeUniversity(universityInfoItem: UniversityInfoItem): Flow<Result<UniFeedback>> {

@@ -10,6 +10,8 @@ import com.example.searchmapuniversity.utils.Result
 import com.example.searchmapuniversity.utils.UIEvent
 import com.example.searchmapuniversity.utils.UNKNOWN_ERROR
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
@@ -28,9 +30,11 @@ class MapViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UIEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    fun fetchUniversities(fetchFromRemote: Boolean){
+    private var searchJob: Job? = null
+
+    fun fetchUniversities(fetchFromRemote: Boolean, query: String?){
         viewModelScope.launch {
-            universityInteractor.fetchUniversitiesInfo(fetchFromRemote).onEach {
+            universityInteractor.fetchUniversitiesInfo(fetchFromRemote, query).onEach {
                 when(it){
                     is Result.Loading -> {
                         _universitiesLiveData.postValue(Result.Loading())
@@ -43,6 +47,14 @@ class MapViewModel @Inject constructor(
                     }
                 }
             }.launchIn(this)
+        }
+    }
+
+    fun searchUniversities(query: String) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            delay(500)
+            fetchUniversities(false, query)
         }
     }
 }
